@@ -1,6 +1,6 @@
 import './App.css';
 import { useState, useRef } from "react";
-import TodoList from "./TodoList";
+import TodoList from "./components/TodoList";
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -10,13 +10,9 @@ function App() {
   // todos: object
   // setTodos: add, update and delete object
   // useState(): observe variables -> when there is a change, render the page
-  const [todos, setTodos] = useState([
-    {id: 1, name: "Todo1", completed: true}
-  ]);
-
+  const [todos, setTodos] = useState([ ]);
   // Get the name from input
   const todoNameRef = useRef();
-  // ------------
 
   const addTask = (e) => {
     // Add task to todoList
@@ -33,10 +29,25 @@ function App() {
     todoNameRef.current.value = null;
   }
 
+const toggleTodo = (id) => {
+
+  const newTodos = [...todos];   // Get obeject
+  const todo = newTodos.find((todo) => todo.id == id);
+
+  // DEBUG:
+  console.log(todo.completed);
+
+  todo.completed = !todo.completed;
+  setTodos(newTodos);  // update object
+
+  // DEBUG:
+  console.log(todo.completed);
+};
+
   return (
     <>
       To-do List App
-      <TodoList todos={todos}/> {/* Componet */}
+      <TodoList todos={todos} toggleTodo={toggleTodo} /> {/* Componet */}
       <input type="text" ref={todoNameRef}/>
       <button onClick={addTask}>Add Task</button>
       <button>Delete completed task</button>
