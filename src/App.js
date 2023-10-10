@@ -29,8 +29,9 @@ function App() {
     todoNameRef.current.value = null;
   }
 
-const toggleTodo = (id) => {
 
+// Toggle Todo item -----
+const toggleTodo = (id) => {
   const newTodos = [...todos];   // Get obeject
   const todo = newTodos.find((todo) => todo.id == id);
 
@@ -44,14 +45,20 @@ const toggleTodo = (id) => {
   console.log(todo.completed);
 };
 
+// Delete completed Task -----
+const deleteItem = () =>{
+  const newTodos = todos.filter((todo) => !todo.completed);
+  setTodos(newTodos);
+};
+
   return (
     <>
       To-do List App
       <TodoList todos={todos} toggleTodo={toggleTodo} /> {/* Componet */}
       <input type="text" ref={todoNameRef}/>
       <button onClick={addTask}>Add Task</button>
-      <button>Delete completed task</button>
-      <div>Number of tasks: </div>
+      <button onClick={deleteItem}>Delete completed task</button>
+      <div>Number of left tasks: {todos.filter((todo) => !todo.completed).length}</div>
     </>
   );
 }
